@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html class="client-js" dir="ltr" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>Quake Map Format - Quake Wiki</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Quake_Map_Format","wgTitle":"Quake Map Format","wgCurRevisionId":2680,"wgRevisionId":2680,"wgArticleId":780,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Quake_Map_Format","wgRelevantArticleId":780,"wgRequestId":"128b2b42eae0bd1373159759","wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[]});mw.loader.state({"site.styles":"ready","noscript":"ready","user.styles":"ready","user.cssprefs":"ready","user":"ready","user.options":"loading","user.tokens":"loading","mediawiki.legacy.shared":"ready","mediawiki.legacy.commonPrint":"ready","mediawiki.sectionAnchor":"ready","mediawiki.skinning.content.externallinks":"ready","skins.monaco":"loading"});mw.loader.implement("user.options@0j3lz3q",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens@0j7fv3p",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.page.startup"]);mw.loader.load("/w/load.php?debug=false\u0026lang=en\u0026modules=skins.monaco\u0026only=scripts\u0026skin=monaco");});</script>
+<link rel="stylesheet" href="Quake%20Map%20Format%20-%20Quake%20Wiki_files/load_002.css">
+<script async="" src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/load_002.php"></script>
+<!--[if IE 8]><link rel="stylesheet" href="/w/skins/monaco/style/css/monaco_ie8.css?303" media="screen"/><![endif]--><!--[if gte IE 8]><link rel="stylesheet" href="/w/skins/monaco/style/css/monaco_gteie8.css?303" media="screen"/><![endif]-->
+<style>
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}  .mw-content-ltr .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr .mw-collapsible-toggle{float:right} .mw-content-rtl .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl .mw-collapsible-toggle{float:left}.mw-customtoggle,.mw-collapsible-toggle{cursor:pointer} caption .mw-collapsible-toggle,.mw-content-ltr caption .mw-collapsible-toggle,.mw-content-rtl caption .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr caption .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle,.mw-content-ltr li .mw-collapsible-toggle,.mw-content-rtl li .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr li .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:#fff;cursor:pointer;border:solid 1px #aaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:#fff;cursor:pointer;border:solid 1px #aaa;padding:0;margin:0}.suggestions-result{color:#000;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4c59a6;color:#fff}.suggestions-special .special-label{color:#808080;text-align:left}.suggestions-special .special-query{color:#000;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:#c0c0c0}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:#fff}.highlight{font-weight:bold}
+@media screen {
+	.tochidden,.toctoggle{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}.toctoggle{font-size:94%}}
+@media print {
+	#toc.tochidden,.toctoggle{display:none}}
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba( 255,255,255,0.5 );border-radius:5px;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB9ElEQVR4AZWRA3AYURQArxrVHtW2bdu2bdu2zdi2bdu2bWxs7zeehZaw4f70kbs+zI3e/nWK+RWx3aOFlrL56Sy5SxrruG69hlv6OyK+mz+8KDSXdXembj0ispT7tjs4ZTIbpYBvxGSGKzZTeFrb7W/meN002swFs0U8ttpHTkF2BvCqWQrW35929bTsKm5Zb+SEwWwcY8wAngB9m7Z+d+rIPZ/npdy12M5p47n8dXsCYAf0qPy06eGMdktuDu9Qf+JmKl3SWM91qzVcN9tAbEYkwMaq0tyb1m/To5kP170el/BK8/qa6sJr70ydf+T/Uu5ab+Oo/lS0AkUBpIFWlZ9WPhxpse/PHO7YbOOczjL0vZV2lNxPPtG73dYXM+xvm2znrOl83tidoqCwMBgYXsPFB0on5S6pr+eK5TKuW67lgvaKvF8mL1dtfTL32FHxRdyx3cQpg7m4x9sCXKkTIzA4LDH44zWdzaUf71hv5rTG4uyzcusybxSX7aThbMQ8XgCYAp3rzTTQOiIh9PNlzY3FSuZxrzjme1Y7uGS6kjsWO4jPjM4FVjRZsvD4kO9XtTZzQn82NyzWc0B7AmZh6gA/hOYSGhfw9YbOVnarj+S7800AL2BIsxUAbWNToj7bhBuQmZcOsFdoKUC74rGheCwXmqAIQTc9jQcrADIAAAAASUVORK5CYII=);background-image:url(/w/resources/src/mediawiki.action/images/green-checkmark.png?d94f1)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:#000;text-shadow:0 0.0625em 0 #fff;text-decoration:none;opacity:0.2;filter:alpha( opacity=20 )}.postedit-close:hover{color:#000;text-decoration:none;opacity:0.4;filter:alpha( opacity=40 )}</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:#000;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:#fff}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}</style><meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="Quake%20Map%20Format%20-%20Quake%20Wiki_files/load.css">
+<meta name="generator" content="MediaWiki 1.28.0">
+<link rel="alternate" type="application/x-wiki" title="Edit" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit">
+<link rel="edit" title="Edit" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit">
+<link rel="shortcut icon" href="https://quakewiki.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://quakewiki.org/w/opensearch_desc.php" title="Quake Wiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://quakewiki.org/w/api.php?action=rsd">
+<link rel="copyright" href="https://www.gnu.org/copyleft/fdl.html">
+<link rel="alternate" type="application/atom+xml" title="Quake Wiki Atom feed" href="https://quakewiki.org/w/index.php?title=Special:RecentChanges&amp;feed=atom">
+<script src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/load.php"></script></head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Quake_Map_Format rootpage-Quake_Map_Format skin-monaco action-view color2 action_view" id="body">
+<div id="skiplinks"> 
+	<a class="skiplink" href="#article" tabindex="1">Skip to Content</a> 
+	<a class="skiplink wikinav" href="#widget_sidebar" tabindex="1">Skip to Navigation</a> 
+</div>
+
+	<div id="background_accent1"></div>
+	<div id="background_accent2"></div>
+
+	<!-- HEADER -->
+	<div id="wikia_header" class="color2">
+		<div class="monaco_shrinkwrap">
+			<div id="userData">
+				<span id="userLogin">
+					<a class="wikia-button" id="login" href="https://quakewiki.org/w/index.php?title=Special:UserLogin&amp;returnto=Quake+Map+Format&amp;type=login">Log in</a>
+				</span>
+
+					<a class="wikia-button" id="register" href="https://quakewiki.org/w/index.php?title=Special:UserLogin&amp;returnto=Quake+Map+Format&amp;type=signup">Create an account</a>
+
+			</div>
+		</div>
+	</div>
+
+		<div id="background_strip" class="reset">
+			<div class="monaco_shrinkwrap">
+
+			<div id="accent_graphic1"></div>
+			<div id="accent_graphic2"></div>
+			</div>
+		</div>
+		<!-- /HEADER -->
+
+		<!-- PAGE -->
+
+	<div id="monaco_shrinkwrap_main" class="monaco_shrinkwrap with_left_sidebar">
+		<div id="page_wrapper">
+			<div id="wikia_page" class="page">
+		<div id="page_bar" class="reset color1 page_bar clearfix">
+			<ul class="page_tabs primary_tabs" id="page_tabs" role="toolbar">
+				<li id="ca-nstab-main" class="selected"><a href="https://quakewiki.org/wiki/Quake_Map_Format" title="View the content page [Alt+Shift+c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="https://quakewiki.org/w/index.php?title=Talk:Quake_Map_Format&amp;action=edit&amp;redlink=1" title="Discussion about the content page [Alt+Shift+t]" accesskey="t">Discussion</a></li>
+			</ul>
+			<ul class="page_buttons page_controls" id="page_controls" role="toolbar">
+				<li id="ca-edit"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" class="sprite edit" alt=""><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit" title="Edit this page [Alt+Shift+e]" accesskey="e">Edit this page</a></li>
+				<li id="ca-history"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" class="sprite history" alt=""><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=history" title="Past revisions of this page [Alt+Shift+h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+					<!-- ARTICLE -->
+
+				<article id="article" class="mw-body" role="main" aria-labelledby="firstHeading">
+					<a id="top"></a>
+															<div class="mw-indicators">
+</div>
+					<h1 id="firstHeading" class="firstHeading" aria-level="1">Quake Map Format</h1>					<div id="bodyContent" class="body_content">
+						<h2 id="siteSub">From Quake Wiki</h2>
+																								
+						<!-- start content -->
+<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><p>The Quake .map Format is a plain text file which contains definitions of <a href="https://quakewiki.org/wiki/Brush" title="Brush">brushes</a> and <a href="https://quakewiki.org/wiki/Entity" title="Entity">entities</a> to be used by <a href="https://quakewiki.org/wiki/QBSP" title="QBSP">QBSP</a> and it's related compiling tools to create a <a href="https://quakewiki.org/wiki/Quake_BSP_Format" title="Quake BSP Format">.bsp file</a> used by Quake as levels. They are generally created by <a href="https://quakewiki.org/wiki/Mapping_tools#General_Purpose_Editors" title="Mapping tools">level editing software</a>.
+</p>
+<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a role="button" tabindex="0" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#A_simple_map"><span class="tocnumber">1</span> <span class="toctext">A simple map</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Structure"><span class="tocnumber">1.1</span> <span class="toctext">Structure</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Entity_definition"><span class="tocnumber">1.2</span> <span class="toctext">Entity definition</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Brush_definition"><span class="tocnumber">1.3</span> <span class="toctext">Brush definition</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="A_simple_map">A simple map</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit&amp;section=1" title="Edit section: A simple map">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<pre>{
+"spawnflags" "0"
+"classname" "worldspawn"
+"wad" "E:\q1maps\Q.wad"
+{
+( 256 64 16 ) ( 256 64 0 ) ( 256 0 16 ) mmetal1_2 0 0 0 1 1
+( 0 0 0 ) ( 0 64 0 ) ( 0 0 16 ) mmetal1_2 0 0 0 1 1
+( 64 256 16 ) ( 0 256 16 ) ( 64 256 0 ) mmetal1_2 0 0 0 1 1
+( 0 0 0 ) ( 0 0 16 ) ( 64 0 0 ) mmetal1_2 0 0 0 1 1
+( 64 64 0 ) ( 64 0 0 ) ( 0 64 0 ) mmetal1_2 0 0 0 1 1
+( 0 0 -64 ) ( 64 0 -64 ) ( 0 64 -64 ) mmetal1_2 0 0 0 1 1
+}
+}
+{
+"spawnflags" "0"
+"classname" "info_player_start"
+"origin" "32 32 24"
+}
+</pre>
+<p>This is an example of a simple map. There is a <a href="https://quakewiki.org/w/index.php?title=Worldspawn&amp;action=edit&amp;redlink=1" class="new" title="Worldspawn (page does not exist)">Worldspawn</a> entity, a special entity which contains all of a map's solid geometry as well as some map properties, which has a single <a href="https://quakewiki.org/w/index.php?title=brush&amp;action=edit&amp;redlink=1" class="new" title="brush (page does not exist)">brush</a> defined, and an <a href="https://quakewiki.org/wiki/info_player_start" title="info player start">info_player_start</a> entity.
+</p>
+<h2><span class="mw-headline" id="Structure">Structure</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit&amp;section=2" title="Edit section: Structure">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<pre>{
+entity
+{
+ brush (optional)
+}
+}
+</pre>
+<p>The general structure of a .map file is to contain entity objects 
+between { } brackets, and to nest brushes within these objects.
+</p>
+<h2><span class="mw-headline" id="Entity_definition">Entity definition</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit&amp;section=3" title="Edit section: Entity definition">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<pre>{
+"spawnflags" "0"
+"classname" "info_player_start"
+"origin" "32 32 24"
+}
+</pre>
+<p>An <a href="https://quakewiki.org/wiki/Entity" title="Entity">entity</a> is simply defined by it's classname, it's origin, and it's various <a href="https://quakewiki.org/wiki/Entity_guide" title="Entity guide">keys</a>.
+ An entity may also contain a brush, if it's of a type which uses a 
+brush. An example of this is the worldspawn entity seen in our simple 
+map, which contains a brush.
+</p>
+<h2><span class="mw-headline" id="Brush_definition">Brush definition</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit&amp;section=4" title="Edit section: Brush definition">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<pre>{
+( 256 64 16 ) ( 256 64 0 ) ( 256 0 16 ) mmetal1_2 0 0 0 1 1
+( 0 0 0 ) ( 0 64 0 ) ( 0 0 16 ) mmetal1_2 0 0 0 1 1
+( 64 256 16 ) ( 0 256 16 ) ( 64 256 0 ) mmetal1_2 0 0 0 1 1
+( 0 0 0 ) ( 0 0 16 ) ( 64 0 0 ) mmetal1_2 0 0 0 1 1
+( 64 64 0 ) ( 64 0 0 ) ( 0 64 0 ) mmetal1_2 0 0 0 1 1
+( 0 0 -64 ) ( 64 0 -64 ) ( 0 64 -64 ) mmetal1_2 0 0 0 1 1
+}
+</pre>
+<p>A <a href="https://quakewiki.org/w/index.php?title=brush&amp;action=edit&amp;redlink=1" class="new" title="brush (page does not exist)">brush</a> consists of several faces, each of which is defined by a <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Plane_%28geometry%29">plane</a>
+ and additional texture information. The actual geometry of the brush is
+ only defined by the planes, of which there must be at least four. Each 
+plane defines a <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Half-space_%28geometry%29">half space</a>, that is, an infinite set of points that is bounded by a plane. The intersection of these half spaces forms a <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Convex_set">convex</a> <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>. Note that the actual <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Vertex_%28computer_graphics%29">vertices</a> of the brush are <b>NOT</b>
+ stored in the map file. The vertices are determined by BSP (or a level 
+editing program) by computing the intersections of the planes.
+</p><p>In the example shown here, this brush is a 6 sided cuboid. The 
+plane of its first face is defined by 3 points, ( 256 64 16 ) ( 256 64 0
+ ) ( 256 0 16 ). The other information supplied is the texture used by 
+the face. "mmetal1_2" is the name of the texture, a single plane may 
+only have a single texture. "0 0 0 1 1" are how the texture is display, 
+and are respectively "X offset" "Y offset" "Rotation" "X scale" and "Y 
+scale".
+</p><p>The plane points ( p1 ) ( p2 ) ( p3 ) are interpreted as follows. The plane points must be arranged such that the <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Cross_product">cross product</a>
+ of the vectors (p3 - p1) and (p2 - p1) is not null, that is, the three 
+points must be linearly independent. Then, the normalized cross product 
+represents the <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Plane_%28geometry%29">normal vector</a> of the plane. Every point p for which (p - p1) * normal &lt;= 0 (where * is the <a rel="nofollow" class="external text" href="http://en.wikipedia.org/wiki/Dot_product">dot product</a>) holds is considered to be in the half space defined by the plane. Every other point is considered not to be in the half space.
+</p><p>The <b>intersection of half spaces</b> interpretation of brushes does not yield the vertices, however. While there are <a rel="nofollow" class="external text" href="http://www.sciencedirect.com/science/article/pii/0304397579900550">efficient methods</a>
+ to compute them directly, the QBSP compiler uses a different approach. 
+Starting with the edges and vertices of a huge cube (usually ranging 
+from -4096 to 4096 in each dimension), the edges of the cube are 
+intersected with the planes of the faces. Upon each intersection, new 
+edges and vertices are generated that replace some of the old ones until
+ all planes have been used. Note that due to floating point 
+inaccuracies, there may be slight errors in the position of each vertex.
+ This may lead to QBSP warnings when it <b>heals</b> degenerate vertices and edges.
+</p><p>In the example used here, all plane points have integer 
+coordinates. In the original Quake map format, only integer coordinates 
+are allowed. This has some advantages and drawbacks. The major advantage
+ is that integer numbers can be written to text files without loss of 
+precision, which is not always true for floating point numbers. The 
+major drawback is that not every plane can be accurately represented 
+using integer coordinates for its points. This becomes problematic when 
+brushes are rotated arbitrarily or when the vertices are edited 
+directly. That is why most modern Quake compilers allow floating point 
+coordinates for plane points.
+</p>
+<!-- 
+NewPP limit report
+Cached time: 20170922192359
+Cache expiry: 86400
+Dynamic content: false
+CPU time usage: 0.012 seconds
+Real time usage: 0.009 seconds
+Preprocessor visited node count: 15/1000000
+Preprocessor generated node count: 20/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 - -total
+-->
+
+<!-- Saved in parser cache with key quakewiki:pcache:idhash:780-0!*!0!!en!*!* and timestamp 20170922192359 and revision id 2680
+ -->
+</div><div class="printfooter">
+Retrieved from "<a dir="ltr" href="http://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;oldid=2680">http://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;oldid=2680</a>"</div>
+<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>						<!-- end content -->
+												<div class="visualClear"></div>
+					</div>
+
+				</article>
+				<!-- /ARTICLE -->
+				
+			<!-- ARTICLE FOOTER -->
+			<div id="articleFooter" class="reset article_footer">
+				<table style="border-spacing: 0;">
+					<tbody><tr>
+						<td class="col1">
+							<ul class="actions" id="articleFooterActions">
+								<li><a id="fe_edit_icon" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_edit_img" class="sprite edit" alt=""></a> <div>Improve Quake Wiki by <a id="fe_edit_link" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=edit">editing this page</a></div></li>
+								<!-- haleyjd 20140425: generic copyright text support -->
+								<li><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_copyright_img" class="sprite copyright" alt=""> <div id="copyright">Content is available under <a class="external" rel="nofollow" href="https://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</div></li>
+							</ul>
+						</td>
+						<td class="col2">
+							<ul id="articleFooterActions3" class="actions clearfix"> 
+								<li id="fe_history"><a id="fe_history_icon" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=history"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_history_img" class="sprite history" alt=""></a> <div><a id="fe_history_link" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;action=history">History</a></div></li>
+								<li id="fe_recent"><a id="fe_recent_icon" href="https://quakewiki.org/wiki/Special:RecentChangesLinked/Quake_Map_Format"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_recent_img" class="sprite recent" alt=""></a> <div><a id="fe_recent_link" href="https://quakewiki.org/wiki/Special:RecentChangesLinked/Quake_Map_Format">Related changes</a> </div></li>
+							</ul>
+							<ul id="articleFooterActions4" class="actions clearfix">
+								<li id="fe_permalink"><a id="fe_permalink_icon" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;oldid=2680"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_permalink_img" class="sprite move" alt=""></a> <div><a id="fe_permalink_link" href="https://quakewiki.org/w/index.php?title=Quake_Map_Format&amp;oldid=2680">Permanent link</a></div></li>
+								<li id="fe_whatlinkshere"><a id="fe_whatlinkshere_icon" rel="nofollow" href="https://quakewiki.org/wiki/Special:WhatLinksHere/Quake_Map_Format"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_whatlinkshere_img" class="sprite pagelink" alt=""></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="https://quakewiki.org/wiki/Special:WhatLinksHere/Quake_Map_Format">What links here</a></div></li>
+							</ul>
+							<ul class="actions clearfix" id="articleFooterActions2">
+								<li id="fe_randompage"><a id="fe_random_icon" href="https://quakewiki.org/wiki/Special:Random"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="fe_random_img" class="sprite random" alt=""></a> <div><a id="fe_random_link" href="https://quakewiki.org/wiki/Special:Random">View random page</a></div></li>
+							</ul>
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+				<!-- /ARTICLE FOOTER -->
+
+			</div>
+			<!-- /PAGE -->
+
+			<noscript><link rel="stylesheet" property="stylesheet" type="text/css" href="/w/skins/monaco/style/css/noscript.css?303" /></noscript>
+		</div>
+		<!-- WIDGETS -->
+		<div id="widget_sidebar" class="reset widget_sidebar left_sidebar sidebar">
+			<div id="wiki_logo" style="background-image: url(/w/images/6/60/Quake_Wiki_Logo_by_Scampie.png);"><a href="https://quakewiki.org/wiki/Main_Page" accesskey="z" rel="home">Quake Wiki</a></div>
+			<!--[if lt IE 7]>
+			<style type="text/css">
+				#wiki_logo {
+					background-image: none !important;
+					filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/w/images/6/60/Quake_Wiki_Logo_by_Scampie.png', sizingMethod='image');
+				}
+			</style>
+			<![endif]-->
+
+			<!-- SEARCH/NAVIGATION -->
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+			<div id="search_box" class="color1" role="search">
+				<form action="/wiki/Special:Search" id="searchform">
+					<label style="display: none;" for="searchInput">Search Quake Wiki</label>
+					<input id="searchInput" maxlength="200" aria-label="Search Quake Wiki" placeholder="Search Quake Wiki" tabindex="2" aria-required="true" aria-flowto="search-button" title="Search Quake Wiki [Alt+Shift+f]" accesskey="f" name="search" autocomplete="off" type="search">										<input name="go" value="1" type="hidden">
+					<input alt="Search" src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="search-button" class="sprite search" tabindex="2" type="image">
+				</form>
+			</div>
+<nav id="navigation" class="hover-navigation"><ul><li id="menu-item_1" class="menu-item"><a id="a-menu-item_1" href="https://quakewiki.org/wiki/Main_Page" tabindex="3">Main page</a></li><li id="menu-item_2" class="menu-item with-sub-menu"><a id="a-menu-item_2" href="https://quakewiki.org/wiki/Playing_Quake" tabindex="3">Playing Quake<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Getting_Started" tabindex="3">Getting Started</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Engines" tabindex="3">Engines</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Singleplayer_guide" tabindex="3">Singleplayer guide</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Multiplayer_guide" tabindex="3">Multiplayer guide</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Gameplay_tips" tabindex="3">Gameplay tips</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Installing_addons" tabindex="3">Installing addons</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Customizing_Quake" tabindex="3">Customizing Quake</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Speedrunning" tabindex="3">Speedrunning</a>
+</li></ul></li><li id="menu-item_11" class="menu-item with-sub-menu"><a id="a-menu-item_11" href="https://quakewiki.org/wiki/Quake_Technical" tabindex="3">Quake Technical<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Console_variables" tabindex="3">Console variables</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Console_commands" tabindex="3">Console commands</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Command_line_parameters" tabindex="3">Command line parameters</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Config_files" tabindex="3">Config files</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_error_guide" tabindex="3">Quake error guide</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_bugs" tabindex="3">Quake bugs</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_tools" tabindex="3">Quake tools</a>
+</li></ul></li><li id="menu-item_19" class="menu-item with-sub-menu"><a id="a-menu-item_19" href="https://quakewiki.org/wiki/Mapping" tabindex="3">Mapping<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Getting_Started_Mapping" tabindex="3">Getting Started Mapping</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Mapping_tools" tabindex="3">Mapping tools</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Map_compiling" tabindex="3">Map compiling</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Entity_guide" tabindex="3">Entity guide</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Mapping_errors" tabindex="3">Mapping errors</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Mapping_tutorials" tabindex="3">Mapping tutorials</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Mapping_links" tabindex="3">Mapping links</a>
+</li></ul></li><li id="menu-item_27" class="menu-item with-sub-menu"><a id="a-menu-item_27" href="https://quakewiki.org/wiki/Making_Assets" tabindex="3">Making Assets<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Modelling" tabindex="3">Modelling</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Making_textures" tabindex="3">Making textures</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Making_graphics" tabindex="3">Making graphics</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Making_sounds" tabindex="3">Making sounds</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_file_formats" tabindex="3">Quake file formats</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_palette" tabindex="3">Quake palette</a>
+</li></ul></li><li id="menu-item_34" class="menu-item with-sub-menu"><a id="a-menu-item_34" href="https://quakewiki.org/wiki/Modding" tabindex="3">Modding<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Getting_Started_Modding" tabindex="3">Getting Started Modding</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Modding_tools" tabindex="3">Modding tools</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/QuakeC_basics" tabindex="3">QuakeC basics</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Compiling_QuakeC" tabindex="3">Compiling QuakeC</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/QuakeC_Globals" tabindex="3">QuakeC Globals</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/QuakeC_Fields" tabindex="3">QuakeC Fields</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Builtin_Functions" tabindex="3">Builtin Functions</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Modding_Tutorials" tabindex="3">Modding Tutorials</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Modding_Links" tabindex="3">Modding Links</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/QSB" tabindex="3">Quake Standards Base</a>
+</li></ul></li><li id="menu-item_45" class="menu-item with-sub-menu"><a id="a-menu-item_45" href="https://quakewiki.org/wiki/Engine_Development" tabindex="3">Engine Development<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Engine_getting_started" tabindex="3">Engine getting started</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Getting_Started_Developing" tabindex="3">Getting Started Developing</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Network_Protocols" tabindex="3">Network Protocols</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Extensions" tabindex="3">Extensions</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Enhanced_engine_features" tabindex="3">Enhanced engine features</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Engine_Standards" tabindex="3">Engine Standards</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Engine_Limits" tabindex="3">Engine Limits</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Engine_tutorials" tabindex="3">Engine tutorials</a>
+</li></ul></li><li id="menu-item_54" class="menu-item with-sub-menu"><a id="a-menu-item_54" href="https://quakewiki.org/wiki/Demos_and_Movies" tabindex="3">Demos and Movies<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Demo_Recording" tabindex="3">Demo Recording</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Demo_tools" tabindex="3">Demo tools</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Machinima" tabindex="3">Machinima</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Movie_list" tabindex="3">Movie list</a>
+</li></ul></li><li id="menu-item_59" class="menu-item with-sub-menu"><a id="a-menu-item_59" href="https://quakewiki.org/wiki/Miscellaneous" tabindex="3">Miscellaneous<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Glossary" tabindex="3">Glossary</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_Development" tabindex="3">Quake Development</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/History_of_Quake" tabindex="3">History of Quake</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Legal_status" tabindex="3">Legal status</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Online_Resources" tabindex="3">Online Resources</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Archives" tabindex="3">Archives</a>
+</li></ul></li><li id="menu-item_66" class="menu-item with-sub-menu"><a id="a-menu-item_66" href="https://quakewiki.org/wiki/Quake_Wiki" tabindex="3">Quake Wiki<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Acknowledgments" tabindex="3">Acknowledgments</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Special:Statistics" tabindex="3">Statistics</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Site_help" tabindex="3">Site help</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_Wiki:Log" tabindex="3">Logs</a>
+</li></ul></li><li id="menu-item_71" class="menu-item with-sub-menu"><a id="a-menu-item_71" href="https://quakewiki.org/wiki/Quake_Wiki:Community_portal" tabindex="3">Community<em>›</em></a><ul class="sub-menu widget"><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_Wiki:Community_portal" tabindex="3">Community portal</a>
+</li><li class="menu-item"><a href="https://quakewiki.org/wiki/Quake_Wiki:Current_events" tabindex="3">Current events</a>
+</li></ul></li></ul></nav><table style="border-spacing: 0;" id="link_box_table">		<tbody id="link_box_dynamic">
+			<tr>
+				<td colspan="2">
+					<ul>
+						<li id="dynamic-links-add-image-row" class="link_box_dynamic_item"><a id="dynamic-links-add-image-icon" href="https://quakewiki.org/w/index.php?title=Special:UserLogin&amp;returnto=Special%3AUpload" tabindex="-1"><img src="Quake%20Map%20Format%20-%20Quake%20Wiki_files/blank.gif" id="dynamic-links-add-image-img" class="sprite photo" alt=""></a> <a id="dynamic-links-add-image-link" href="https://quakewiki.org/w/index.php?title=Special:UserLogin&amp;returnto=Special%3AUpload" tabindex="3">Upload a new image</a></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+		<tbody id="link_box" class="color2 linkbox_static">
+			<tr>
+				<td>
+					<ul>
+						<li><a rel="nofollow" href="https://quakewiki.org/wiki/Special:RecentChanges" tabindex="3">Recent changes</a></li>
+						<li><a rel="nofollow" href="https://quakewiki.org/wiki/Special:SpecialPages" tabindex="3">Special pages</a></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li><a rel="nofollow" href="https://quakewiki.org/wiki/Special:Random" tabindex="3">Random page</a></li>
+						<li><a rel="nofollow" href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" tabindex="3">Help</a></li>
+						<li style="font-size: 1px; position: absolute; top: -10000px"><a href="https://quakewiki.org/wiki/Special:Recentchanges" accesskey="r">Recent changes</a><a href="https://quakewiki.org/wiki/Special:Random" accesskey="x">Random page</a></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+			</div>
+			<!-- /SEARCH/NAVIGATION -->
+
+		</div>
+		<!-- /WIDGETS -->
+	<!--/div-->
+
+</div><script>(window.RLQ=window.RLQ||[]).push(function(){mw.loader.load(["mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest"]);});</script>
+<!--[if IE]><script type="text/javascript">'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})</script><![endif]-->		<div id="positioned_elements" class="reset"></div>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":31});});</script>
+	
+
+<div style="display: none; font-size: 14px;" class="suggestions"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body></html>

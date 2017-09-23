@@ -1,0 +1,945 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN">
+<html version="2.0"><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Quake MAP Specs</title>
+</head>
+<body vlink="#0000ff" link="#0000ff" bgcolor="#ffffff">
+<center><h1 align="CENTER">Quake MAP Specs</h1></center>
+<center><align="center"><font size="1">Last Updated: 8/22/96 8:52PM EST</font></align="center"></center>
+<center><p align="CENTER">Info on entities/maps and maintenance by <a href="mailto:nichd@norfolk.infi.net">Niklata (Nicholas Dwarkanath)</a><br>
+Additions and original HTMLization by <a href="mailto:thomas.winzig@webcom.com">Thomas Winzig</a></p></center>
+<p>Here are the MAP file specs.  This document should tell you everything you need to know about MAP files. This should help you
+in making editors/building MAP files. If you find an error, or figure something out
+that I don't know, please email <a href="mailto:nichd@norfolk.infi.net">Niklata</a>. I'll put in your contribution and you'll get your name in here as well. </p>
+
+<p><font size="3">This document is now a part of the <a href="http://www.gamers.org/dEngine/quake/spec/qspec-current.html">Unoffical Quake Specs</a>.  This standalone version is here to provide you with the most up-to-date information about Quake Map Editing.
+It is also a part of the <a href="http://www.gamers.org/dEngine/quake/#QDP">Quake Documentation Project</a>.</font></p>
+
+<p><font size="3">Since map editing is quite untested, a great deal of 
+new
+information is pouring in about editing Quake levels.  Not everything is
+ here yet.  I frequently update the seperate Map Specs and you
+can get the latest version from <a href="http://www.infi.net/%7Enichd/qmapspec.html">Niklata's web site</a>.
+  Please note that my web site will probably be moving soon!  Keep 
+checking for further information.  I'll have it soon.  Hopefully when 
+editing
+becomes more mainstream and the rate of new discoveries comes to a near 
+stop, I won't have to tell you about (or maintain) the standalone file.</font></p>
+
+<p>You can get the most up-to-date version of the <a href="http://www.infi.net/%7Enichd/qmapspec.html">Quake MAP Specs</a> from <a href="http://www.infi.net/%7Enichd/quake.html">Quake Technical Resources</a>. 
+</p><hr size="5" noshade="noshade">
+<h2 align="CENTER"><a name="TOC">Table of Contents</a></h2>
+<p><b>Section 1: MAP Information</b><br>
+<b><a href="#2.1.1">1.1</a>:</b> Coordinate System<br>
+<b><a href="#2.1.2">1.2</a>:</b> Brushes<br>
+<b><a href="#2.1.3">1.3</a>:</b> Map Structure<br>
+</p><p><b>Section 2: Entity Information</b><br>
+<b><a href="#2.2.1">2.1</a>:</b> Entity Overview<br>
+<b><a href="#2.2.2">2.2</a>:</b> "spawnflags" tag <br>
+<b><a href="#2.2.3">2.3</a>:</b> Optional parameters for triggers <br>
+<b><a href="#2.2.4">2.4</a>:</b> General entity syntax and list </p>
+<p><b>Section 3: Entity <b>classname</b> examples</b><br>
+<b><a href="#2.3.1">3.1</a>:</b> Lights <br>
+<b><a href="#2.3.2">3.2</a>:</b> Player movement tags <br>
+<b><a href="#2.3.3">3.3</a>:</b> Movers (Doors, plats, etc) <br>
+<b><a href="#2.3.4">3.4</a>:</b> Triggers/Switches <br>
+<b><a href="#2.3.5">3.5</a>:</b> Traps/Things harmful to you <br>
+<b><a href="#2.3.6">3.6</a>:</b> Miscellaneous </p>
+<p><b>Section 4: Special entity-related structures</b><br>
+<b><a href="#2.4.1">4.1</a>:</b> Moving platforms<br>
+<b><a href="#2.4.2">4.2</a>:</b> Monsters and triggers<br>
+<b><a href="#2.4.3">4.3</a>:</b> How to use trigger_count<br>
+<b><a href="#2.4.4">4.4</a>:</b> Teleporting monsters<br>
+<b><a href="#2.4.5">4.5</a>:</b> Properties of Buttons</p>
+<hr size="5" noshade="noshade">
+
+<p><font size="5">What's New</font></p>
+
+<p><font size="3">More bugfixes.  Added stuff to coordinate systems and brushes.</font></p>
+
+
+
+<p><b>Contributors to the Map Section</b></p>
+
+<p><b>Thomas Winzig</b> - Confirmation on the <b>model</b>; tag's 
+behavior. HTMLization of original Map Specs doc.  Clarified several 
+things. Reorganized the document structure a little bit.<br>
+<b>Brian Hackert</b> - Info on how to use <b>func_train</b> and <b>path_corner</b>.  Told me that <b>targetname</b> and <b>target</b> can have real names for their argument, not just numbers.<br>
+<b>Remco Stoffer</b> - <b>trigger_counter</b> info, light styles, <b>trap_shooter</b>,  some <b>trigger_relay</b> info, teleporting monsters, shootable buttons, and lots of other stuff.<br>
+<b>Thomas Scherning</b> - Information on the last five brush parameters.<br>
+<b>Lars Bensmann</b> - Information on using <b>origin</b> with attached brushes, a few bugfixes.<br>
+<b>Robert Jones</b> - Info on using <b>light</b> tag with fires, list of light styles.<br>
+<b>Marc Fontaine</b> - Correcting the Y-axis in the coord system.<br>
+<b>Bernd Kreimeier</b> - Correcting rot_angle and texture offsets.<br>
+<b>Ben Morris</b> - Correcting right/left handed system.</p>
+<b>Dalias</b> - Correcting several errors in section 2.2.3 and for func_wall's purpose.
+
+<center><h2 align="CENTER"><a name="CMFMF">Section 1: MAP Information</a></h2>
+</center><h3><a name="2.1.1">2.1.1 Coordinate System:</a></h3>
+<p><font size="3">Quake uses a standard right-handed (X,Y,Z) coordinate 
+system.  If you're not familiar with
+ the reference of "right-handed" to a coordinate system, it basically 
+provides a tactile and visual discription
+ of the mechanics of the system.  If you point your fingers towards the 
+positive x-axis and bend your fingers so that your knuckles face the 
+positive y-axis, your thumb will point towards the positive z-axis:</font></p>
+<pre>        ^ z+
+        |
+        |
+        |
+        |
+        |------------&gt; y+
+       /
+      /
+     /
+    /
+   &lt;
+ x+
+</pre>
+<p><font size="3">Some entities also need to have an <b>angle</b> tag that tells the direction it is facing.  The values possible are listed below:</font></p>
+<pre>0-359: Normal Angle (zero == east)
+-1: Up
+-2: Down
+</pre>
+<h3><a name="2.1.2">2.1.2 Brushes:</a></h3>
+<p><font size="3">Brushes are one of the two primary components of a MAP file.  Each brush defines a solid region.
+  Brushes define this region as the intersection of four or more planes.  Each plane is defined by three
+  noncolinear points.  These points must go in a clockwise orientation:</font></p>
+<pre>1--2-----------------&gt;
+|
+3
+|
+|
+|
+|
+|
+,
+</pre>
+<p><font size="3">Each brush statement looks like this:</font></p>
+<pre> {
+  ( 128 0 0 ) ( 128 1 0 ) ( 128 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 256 0 0 ) ( 256 0 1 ) ( 256 1 0 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 128 0 ) ( 0 128 1 ) ( 1 128 0 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 384 0 ) ( 1 384 0 ) ( 0 384 1 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 0 64 ) ( 1 0 64 ) ( 0 1 64 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 0 128 ) ( 0 1 128 ) ( 1 0 128 ) GROUND1_6 0 0 0 1.0 1.0
+ }
+</pre>
+<p><font size="3">That's probably just a bit confusing when you first see it.  It defines a rectangular region
+ that extends from (128,128,64) to (256,384,128).  Here's what a single line means:</font></p>
+<pre>  ( 128 0 0 ) ( 128 1 0 ) ( 128 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+   1st Point   2nd Point   3rd Point   Texture  
+					       
+</pre>
+<p><font size="3">Now, you're probably wondering what those last five numbers are.  I've listed what they do below:</font></p>
+<pre>x_off     - Texture x-offset (must be multiple of 16)
+y_off     - Texture y-offset (must be multiple of 16)
+rot_angle - floating point value indicating texture rotation
+x_scale   - scales x-dimension of texture (negative value to flip)
+y_scale   - scales y-dimension of texture (negative value to flip)
+</pre>
+
+<h3><a name="2.1.3">2.1.3 General MAP Info:</a></h3>
+
+<p><font size="3">The actual MAP file format is quite simple.  It is simply a text file.  All Quake editing
+tools should support either UNIX or DOS text formats, as id's tools do.</font></p>
+
+<p><font size="3">MAP files are the development format for Quake levels.  It is preferred that all editors
+work with MAP files, as all tools released by id Software also use the MAP file format.  A map file is
+basically un-'compiled' level data.  The actual MAP file is totally unusable by Quake itself until it
+is coverted to a BSP file by a BSP builder such as id Software's QBSP.  For a MAP file's lightmaps
+to be calculated by Quake, the level must also be run through a light builder, such as LIGHT.  Otherwise,
+everything will be displayed at full brightness.  Finally, to speed up the level and ensure proper
+display, visibility lists should be calculated by a program such as VIS.  The process for building
+levels in Quake is quite time-consuming compared to building Doom levels, even on a fast computer.</font></p>
+
+<p><font size="3">The generalized format for a MAP file is as follows:</font></p>
+
+<pre>{
+ entity
+ {
+  brush (optional)
+ }
+}
+...
+</pre>
+
+<p><font size="3">Comments in the MAP file are indicated by a "//" (C++ style comment).</font></p>
+
+
+<p><font size="3">Many entity/brush combinations can be put into a map file.  All MAP files must contain
+with a <b>worldspawn</b> entity, usually as the first entry.  This entry defines all of the normal
+brushes that make up the structure of the level.  There should be only one <b>worldspawn</b>
+entity per MAP file.  Here's the syntax of the <b>worldspawn</b> class:</font></p>
+
+<pre>"classname" "worldspawn" // Tells Quake to spawn the world
+"wad" "DIRPATH"          // tells what graphics (texture) WAD2 file to use.
+"message" "TITLE"        // The title of the level
+"worldtype" "#"          // Describes time of environment (changes appearance/name of keys)
+                         // 0 == Medieval (medieval)
+                         // 1 == Runic (metal)
+                         // 2 == Present (base)
+"sounds" "#"             // Tells the CD player which track to play.
+"light" "#"              // Default light level
+</pre>
+<p><font size="3">A simple map file would look like this:</font></p>
+<pre>{
+ "sounds" "1"
+ "classname" "worldspawn"
+ "wad" "/gfx/base.wad"
+ "worldtype" "0"
+ {
+  ( 128 0 0 ) ( 128 1 0 ) ( 128 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 256 0 0 ) ( 256 0 1 ) ( 256 1 0 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 128 0 ) ( 0 128 1 ) ( 1 128 0 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 384 0 ) ( 1 384 0 ) ( 0 384 1 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 0 64 ) ( 1 0 64 ) ( 0 1 64 ) GROUND1_6 0 0 0 1.0 1.0
+  ( 0 0 128 ) ( 0 1 128 ) ( 1 0 128 ) GROUND1_6 0 0 0 1.0 1.0
+ }
+}
+{
+ "classname" "info_player_start"
+ "origin" "256 384 160"
+}
+</pre>
+<p><font size="3">As you can see, all brushes are contained in entities, even those that make up the
+ main level.  The most complex part of MAP files are the entities.  They are what the rest of this document are about.</font></p>
+<center><h2 align="CENTER"><a name="s2">Section 2: Entity information</a></h2>
+
+</center><h3><a name="2.2.1">2.2.1 Entity Overview:</a></h3>
+<p><font size="3">Entities are the second major component of Quake MAP files.  An entity is basically a bit like a thing,
+ but they also function as triggers and as pathmarkers.  A entity statement looks like this:</font></p>
+<pre>{
+ "classname" "light"
+ "origin" "0 128 64"
+ "light" "255"
+}
+</pre>
+<p><font size="3">This is what is called a general entity statement.  It is called a general statement
+ because it does not attach to a brush.  An attached entity statement looks like this:</font></p>
+<pre>{
+ "classname" "func_door"
+ "angle" "0"
+ "speed" "16"
+ "targetname" "t1"
+ "sounds" "1"
+ "wait" "16"
+  {
+   ( 128 0 0 ) ( 128 1 0 ) ( 128 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+   ( 256 0 0 ) ( 256 0 1 ) ( 256 1 0 ) GROUND1_6 0 0 0 1.0 1.0
+   ( 0 128 0 ) ( 0 128 1 ) ( 1 128 0 ) GROUND1_6 0 0 0 1.0 1.0
+   ( 0 384 0 ) ( 1 384 0 ) ( 0 384 1 ) GROUND1_6 0 0 0 1.0 1.0
+   ( 0 0 64 ) ( 1 0 64 ) ( 0 1 64 ) GROUND1_6 0 0 0 1.0 1.0
+   ( 0 0 128 ) ( 0 1 128 ) ( 1 0 128 ) GROUND1_6 0 0 0 1.0 1.0
+  }
+}
+</pre>
+<p><font size="3">Attached entity brushes can have an "origin" tag.  It can be used to offset where they appear in the level.</font></p>
+
+<p>For the rest of the document, when I give you frameworks for a 
+structure, the individual entries can be in any order, and lots are 
+optional. I try to mark if an
+entry is optional, although this has not yet been rigorously tested. </p>
+<p>In a "" block, your choices for that block are delimited by commas. </p>
+
+<h3><a name="2.2.2">2.2.2 "spawnflags" tag:</a> </h3>
+<p>I believe that anything with an origin tag can have an optional 'spawnflags' tag. This is not confirmed, however.
+  Tags can be combined by addition or bitwise or (really the same thing).</p>
+<pre>General:
+
+256  - Normal Skill or higher
+512  - Hard Skill or higher
+1792 - Appears in deathmatch only
+
+item_health:
+1    - Larger Health/Larger Ammo
+2    - Megahealth
+
+monster_zombie:
+1    - Crucified Zombie
+</pre>
+
+<h3><a name="2.2.3">2.2.3 General Entity syntax:</a></h3>
+
+<p><i>(Thanks to John Wakelin who wrote much of this section)</i></p>
+
+<p>The entities define the monsters, things, but also the positions in
+space where something must happen.  So they are the Quake equivalent
+of both the THINGS and the LINEDEF types from DOOM.</p>
+
+
+<p>The entity definitions are made up of a series of specific details
+that define what each is, where it starts, when it appears etc.  Each
+specific is followed by a modifier that arguments it.  All definitions
+have the <tt>classname</tt> specific that identifies that entity.  The
+<tt>classname</tt> specifics relate intimately with the
+code lump and are the names of functions written in
+Quake C.</p>
+
+<p>I have chosen the terms ``specific'' and ``arg'' for the two
+different parts of each detail of the definition.  These terms may or
+may not suit but, they will have to do until we learn what id calls
+them.</p>
+
+<pre><b>Specifics    Args      Description</b>
+--------------------------------------------------------------------------------
+"classname"  "<i>name</i>"    // Type of entity to be defined (mandatory)
+"origin"     "<i>X Y Z</i>"   // Coordinates of where it starts in space.
+"angle"      "<i>#</i>"       // Direction it faces or moves (sometimes in degrees)
+"light"      "<i>#</i>"       // Used with the <i>light</i> classname.
+"target"     "<i>t#</i>"      // Matches a targetname.
+"targetname" "<i>t#</i>"      // Like a linedef tag.
+"killtarget" "<i>#</i>"       // Removes target when triggered?
+"spawnflags" "<i>#</i>"       // Used to flag/describe an entity that is not default.
+"style"      "#"       // Used to flag/describe an entity that is not default.
+"message"    "<i>string</i>"  // Message displayed when triggered (\n for linebreaks)
+"mangle"     "<i>X Y Z</i>"   // Point where the intermission camera looks at
+
+{BRUSH INFO}           // In entities that describe triggers/doors/platforms, etc,
+                       // the brush info is inserted into the entity brackets,
+                       // delimited by another set of brackets.
+
+specifics/args present only in models:
+
+"speed"      "<i>#</i>"       // How fast the model is moved.
+"wait"       "#"       // How long a pause between completion of movement or
+                       // return to original position (in seconds or 10ths)
+"lip"        "#"       // Seems to be a means of adjusting the starting position.
+"dmg"        "#"       // How much damage the model causes when it shuts on you?
+"health"     "#"       // How much damage the model takes before it triggers
+"delay"      "#"       // Time before event is triggered
+"sounds"     "#"       // How much damage the model causes when it shuts on you?
+"wad"        "<i>wadfile</i>" // The wad2 graphics file used by the world for textures.
+"height"     "#"       // How high a platform will raise
+
+
+---------------------------------------------------------------------------------
+{
+    "specific1" "arg1" // The first descriptors (usually classname)
+    "specific2" "arg2" // The second
+    ...                // Etc...
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt; // for entities like doors/triggers/platforms/etc
+    }
+}
+</pre>
+
+
+<p>Note: The term <em>model</em> refers to a combination of a brush
+and an entity.  One or more brushes are bound to an entity, which
+controls the behavior of the brushes.  All brushes are contained
+within models.</p>
+
+<p>The model numbers in the compiled BSP (<tt>*</tt><var>x</var>) comes from the order in
+which the models are stored in the models structure.  These numbers
+are originally derived from the order of the models in the source MAP file.</p>
+
+<p>The worldspawn model is a bounding box that defines the
+extents of the whole world.</p>
+
+<p>The models are defined by a bounding box of the <tt>max</tt> and
+<tt>min(x,y,z)</tt>.  Therefore they are always parallel to the
+horizontal planes.  This bounding box is simply used for speeding
+up collision detection and will not affect the movement of the
+models themselves.</p>
+
+
+<h3><a name="2.2.4">2.2.4 All known entities (current for Shareware Quake 1.01):</a></h3>
+<pre><b>air_bubbles</b>                   : Rising bubbles
+
+<b>ambient_drip</b>                  : Dripping sound
+<b>ambient_drone</b>                 : Engine/machinery sound
+<b>ambient_comp_hum</b>              : Computer background sounds
+<b>ambient_flouro_buzz</b>           : Flourescent buzzing sound
+<b>ambient_light_buzz</b>            : Buzzing sound from light
+<b>ambient_suck_wind</b>             : Wind sound
+<b>ambient_swamp1</b>                : Frogs croaking
+<b>ambient_swamp2</b>                : Slightly different sounding frogs croaking
+<b>ambient_thunder</b>               : Thunder sound
+
+<b>event_lightning</b>               : Lightning (Used to kill Cthon, shareware boss)
+
+<b>func_door</b>                     : Door
+<b>func_door_secret</b>              : A door that is triggered to open
+<b>func_wall</b>                     : A moving wall?
+<b>func_button</b>                   : A button
+<b>func_train</b>                    : A platform (moves along a "train")
+<b>func_plat</b>                     : A lift/elevator
+<b>func_dm_only</b>                  : A teleporter that only appears in deathmatch
+<b>func_illusionary</b>              : Creates brush that appears solid, but isn't.
+
+<b>info_null</b>                     : Used as a placeholder (removes itself)
+<b>info_notnull</b>                  : Used as a placeholder (does not remove itself)
+<b>info_intermission</b>             : Cameras positioning for intermission (?)
+<b>info_player_start</b>             : Main player starting point (only one allowed)
+<b>info_player_deathmatch</b>        : A deathmatch start (more than one allowed)
+<b>info_player_coop</b>              : A coop player start (more than one allowed)
+<b>info_player_start2</b>            : Return point from episode
+<b>info_teleport_destination</b>     : Gives coords for a teleport destination using a targetname
+
+All <b>item_</b> tags may have a <b>target</b> tag.  It triggers 
+the event when the item is picked up.
+
+<b>item_cells</b>                    : Ammo for the Thunderbolt
+<b>item_rockets</b>                  : Ammo for Rocket/Grenade Launcher
+<b>item_shells</b>                   : Ammo for both Shotgun and SuperShotgun
+<b>item_spikes</b>                   : Ammo for Perforator and Super Perforator
+<b>item_weapon</b>                   : Generic weapon class
+<b>item_health</b>                   : Medkit
+<b>item_artifact_envirosuit</b>      : Environmental Protection Suit
+<b>item_artifact_super_damage</b>    : Quad Damage
+<b>item_artifact_invulnerability</b> : Pentagram of Protection
+<b>item_artifact_invisibility</b>    : Ring of Shadows (Invisibility)
+<b>item_armorInv</b>                 : Red armor
+<b>item_armor2</b>                   : Yellow armor
+<b>item_armor1</b>                   : Green armor
+<b>item_key1</b>                     : Silver Key
+<b>item_key2</b>                     : Gold Key
+<b>item_sigil</b>                    : Sigil (a rune)
+
+<b>light</b>                         : A projected light. No visible lightsource.
+<b>light_torch_small_walltorch</b>   : Small wall torch (gives off light)
+<b>light_flame_large_yellow </b>     : Large yellow fire (gives off light)
+<b>light_flame_small_yellow </b>     : Small yellow fire (gives off light)
+<b>light_flame_small_white </b>      : Small white fire  (gives off light)
+<b>light_fluoro </b>                 : Fluorescent light? (Gives off light, humming sound?)
+<b>light_fluorospark</b>             : Fluorescent light? (Gives off light, makes sparking sound)
+<b>light_globe</b>                   : Light that appears as a globe sprite
+
+<b>monster_army</b>                  : Grunt
+<b>monster_dog</b>                   : Attack dog
+<b>monster_ogre</b>                  : Ogre
+<b>monster_ogre_marksman</b>         : Ogre (synonymous with monster_ogre)
+<b>monster_knight</b>                : Knight
+<b>monster_zombie</b>                : Zombie
+<b>monster_wizard</b>                : Scragg (Wizard)
+<b>monster_demon1 </b>               : Fiend (Demon)
+<b>monster_shambler</b>              : Shambler
+<b>monster_boss</b>                  : Cthon (Boss of Shareware Quake)
+<b>monster_enforcer</b>              : Enforcer
+<b>monster_hell_knight</b>           : Hell Knight
+<b>monster_shalrath</b>              : Shalrath
+<b>monster_tarbaby</b>               : Slime
+<b>monster_fish</b>                  : Fish
+<b>monster_oldone</b>                : Shubb-Niggurath
+                                       (requires a misc_teleportrain and a info_intermission)
+
+<b>misc_fireball</b>                 : Small fireball (gives off light, harms player)
+<b>misc_explobox</b>                 : Large Nuclear Container
+<b>misc_explobox2</b>                : Small Nuclear Container
+<b>misc_teleporttrain</b>            : Spiked ball needed to telefrag monster_oldone
+
+<b>path_corner</b>                   : Used to define path of <b>func_train</b> platforms
+
+<b>trap_spikeshooter</b>             : Shoots spikes (nails)
+<b>trap_shooter</b>                  : Fires nails without needing to be triggered.
+
+<b>trigger_teleport</b>              : Teleport (all trigger_ tags are triggered by walkover)
+<b>trigger_changelevel </b>          : Changes to another level
+<b>trigger_setskill</b>              : Changes skill level
+<b>trigger_counter</b>               : Triggers action after it has been triggered <b>count</b> times.
+<b>trigger_once</b>                  : Triggers action only once
+<b>trigger_multiple</b>              : Triggers action (can be retriggered)
+<b>trigger_onlyregistered</b>        : Triggers only if game is registered (registered == 1)
+<b>trigger_secret</b>                : Triggers action and awards secret credit.
+<b>trigger_monsterjump </b>          : Causes triggering monster to jump in a direction
+<b>trigger_relay</b>                 : Allows delayed/multiple actions from one trigger 
+<b>trigger_push</b>                  : Pushes a player in a direction (like a windtunnel)
+<b>trigger_hurt</b>                  : Hurts whatever touches the trigger
+
+<b>weapon_supershotgun</b>           : Super Shotgun
+<b>weapon_nailgun</b>                : Perforator
+<b>weapon_supernailgun</b>           : Super Perforator
+<b>weapon_grenadelauncher</b>        : Grenade Launcher
+<b>weapon_rocketlauncher</b>         : Rocket Launcher
+<b>weapon_lightning</b>              : Lightning Gun
+
+</pre>
+<center><h2 align="CENTER"><a name="CMFMC">Section 3: Entity 'class' examples</a></h2><a name="CMFMC">
+</a></center><h3><a name="CMFMC"><b></b></a><b><a name="2.3.1">2.3.1 Lights</a></b></h3>
+<p><font size="3">For all light-emmitting entities, <b>spawnflags</b> and <b>style</b> have special meanings:</font></p><font size="3">
+<pre>Spawnflags:
+0 - Light starts on.  Switches off when triggered.
+1 - Light starts off.  Switches on when triggered.
+
+Style:
+0  - normal
+1  - flicker (first variety)
+2  - slow strong pulse
+3  - candle (first variety)
+4  - fast strobe
+5  - gentle pulse
+6  - flicker (second variety)
+7  - candle (second variety)
+8  - candle (third variety)
+9  - slow strobe
+10 - flourescent flicker
+11 - slow pulse, not fading to black
+   
+   styles 32-62 are assigned by the light program for switchable lights
+
+63 - testing
+
+<cr><cr>
+<b>Regular Light:</b>
+
+{
+    "classname" "light"
+    "origin" "X Y Z"    // Tells where the light is
+    "light" "#"         // Tells how bright the light is (optional - default 200)
+    "style" "#"         // How the light appears
+    "spawnflags" "#"    // State light starts in
+    "targetname" "#"    // Target id of the light
+}
+
+<b>Fluorescent Light:</b>
+
+{
+    "classname" "light_fluoro"
+    "origin" "X Y Z"    // Tells where the light is
+    "light" "#"         // Tells how bright the light is (optional - default 200)
+    "style" "#"         // How the light appears
+    "spawnflags" "#"    // State light starts in
+    "targetname" "#"    // Target id of the light
+}
+
+<b>Fluorescent Light (makes sparking sound):</b>
+{
+    "classname" "light_fluorospark"
+    "origin" "X Y Z"    // Tells where the light is
+    "light" "#"         // Tells how bright the light is (optional - default 200)
+    "style" "#"         // How the light appears
+    "spawnflags" "#"    // State light starts in
+    "targetname" "#"    // Target id of the light
+}
+
+<b>Torches:</b>
+
+{
+    "classname" "light_torch_small_walltorch"
+    "origin" "X Y Z"    // Tells where the light is
+    "light" "#"         // Tells how bright the light is (optional - default 200)
+    "style" "#"         // How the light appears
+    "spawnflags" "#"    // State light starts in
+    "targetname" "#"    // Target id of the light
+}
+
+<b>Fire:</b>
+
+{
+"classname" "light_flame_large_yellow, light_flame_small_yellow, light_flame_small_white"
+"light" "#"         // Tells how bright the light is (optional)
+"origin" "X Y Z"
+}
+</cr></cr></pre>
+<h3><a name="2.3.2">2.3.2 Player Movement Entities</a></h3>
+<pre><b>Level Change Trigger (attaches to brush):</b>
+
+{
+    "classname" "trigger_changelevel"
+    "map" "mapname"  // Map to change to on trigger (e.g. e1m8)
+    "spawnflags" "#" // Flags describing the object (optional)
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+
+}
+
+<b>Teleport Trigger (attaches to brush):</b>
+
+{
+    "classname" "trigger_teleport"
+    "target" "t#"     // Teleport destination name to teleport to.
+    "targetname" "t#" // Trigger name (optional) - only teleports once
+                                             activated if <b>targetname</b> is present.
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    {
+
+}
+
+<b>Teleport Destination:</b>
+
+{
+    "classname" "info_teleport_destination"
+    "origin" "X Y Z"
+    "angle" "#"       // angle the player will face upon leaving teleport
+    "targetname" "t#" // Teleport's trigger name
+}
+</pre>
+<h3><a name="2.3.3">2.3.3 Movers</a></h3>
+<pre><b>Door (attaches to brush):</b>
+
+{
+    "classname" "func_door, func_door_secret"
+    "angle" "#"      // angle it faces
+    "speed" "#"      // speed of movement
+    "targetname" "#" // Door's trigger name
+    "sounds" "#"     // sound it makes
+    "wait" "#"       // delay before closing
+    "spawnflags "#"       // Flags describing the object (optional)
+    "lip" "#"        // some kind of offset (optional)
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Spawns on certain skill levels (controlled by <b>spawnflags</b>), can be removed by a trigger. (attaches to brush):</b>
+
+{
+    "classname" "func_wall"
+    "spawnflags" "#" // flags for something (optional I'd guess)
+}
+
+<b>A platform (i.e. lift or elevator, attaches to brush):</b>
+
+{
+    "classname" "func_plat"
+    "height" "#" // height it rises? (optional)
+    "sounds" "#" // sound it makes (optional)
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Moving platform (Attaches to brush):</b>
+
+{
+    "classname" "func_train"
+    "sounds" "#"      // Sound it makes when activated
+    "speed" "#"       // Speed at which it moves (optional)
+    "target" "t#"     // Trigger name of its first path_corner destination
+    "targetname" "t#" // Its trigger name
+    "dmg" "#"         // Damage done on crush
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Describes path of train/monsters:</b>
+
+{
+    "classname" "path_corner"
+    "origin" "X Y Z"
+    "target" "t#"     // Trigger name of next train destination.
+    "targetname" "t#" // It's trigger name.
+}
+
+</pre>
+<h3><a name="2.3.4">2.3.4 Triggers/Switches</a></h3>
+<pre><b>A button/switch (attaches to brush):</b>
+
+{
+    "classname" "func_button"
+    "angle" "#"   // Angle button moves?
+    "speed" "#"   // Speed it moves in?
+    "target" "t#" // Trigger name of target entity
+    "health" "#"  // If there is health, button is shootable
+    "sounds" "#"  // Sound it makes when activated
+                                      // 1 == Steam Metal
+                                      // 2 == Wooden Clunk
+                                      // 3 == Metallic Click
+                                      // 4 == In-Out
+    "wait" "#"    // Wait until retrigger? (-1 stays pressed)
+    "delay" "#"   // Delay before action is triggered
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Walk-over trigger (attaches to brush):</b>
+
+{
+    "classname" "trigger_once, trigger_multiple, trigger_onlyregistered, trigger_secret"
+    "style" "#"       // 32 works
+    "killtarget" "t#" // Kills something [for triggering monster events] (optional)
+    "target" "t#"     // Trigger name of target
+    "sounds" "#"      // Sound made when triggered
+                                          // 1 == Secret Sound
+                                          // 2 == Beep Beep
+                                          // 3 == Large Switch
+                                          // 4 == Set "message" to text string
+    "wait" "#"        // Delay before retrigger. some classes only. (optional)
+    "delay" "#"       // Delay before action is triggered
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Triggers <i>target</i> after it is triggered <i>count</i> times:</b>
+
+{
+    "classname" "trigger_counter" 
+    "targetname" "t#" // Its trigger name
+    "target" "t#"     // Trigger name of its target
+    "count" "#"       // Decrements on each trigger.  When 0 activates <b>target</b>.
+    "wait" "#"        // Required delay before retrigger
+    "delay" "#"       // Delay before action is triggered
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Used to stagger events on a trigger:</b>
+
+{
+    "classname" "trigger_relay"
+    "origin" "X Y Z"  // Where it is located
+    "killtarget" "#"  // Removes targeted entity (optional)
+    "targetname" "t#" // Its trigger name
+    "target" "t#"     // Trigger name of its target
+    "delay" "#"       // Delay before action is triggered
+}
+
+<b>Makes a monster jump when it reaches a brush:</b>
+
+{
+	"classname" "trigger_monsterjump"
+    "speed" "#"       // Forward velocity of the monster jump
+    "height" "#"      // How high the monster jumps
+    "angle" "#"       // Angle towards which the monster jumps
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>An invisible brush?:</b>
+
+{
+	"classname" "func_illusionary"
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+   
+</pre>
+<h3><a name="2.3.5">2.3.5 Traps/Things harmful to you:</a></h3>
+<pre><b>Triggerable Nail-firing trap:</b>
+
+{
+    "classname" "trap_spikeshooter"
+    "origin" "X Y Z"
+    "angle" "#"       // Angle the trap fires at
+    "targetname" "t#" // Trap's trigger name
+    "spawnflags" "#"  // ??? 1024 works
+}
+
+<b>Constant Nail-firing trap:</b>
+
+{
+    "classname" "trap_shooter"
+    "origin" "X Y Z"
+    "angle" "#"       // Angle the trap fires at
+    "spawnflags" "#"  // ??? 1024 works
+    "wait" "#"        // Time between shots
+}
+
+<b>Fireballs:</b>
+
+{
+    "classname" "misc_fireball"
+    "origin" "X Y Z"
+    "speed" "#" // Tells how fast the fireball moves
+}
+</pre>
+<h3><a name="2.3.6">2.3.6 Miscellaneous:</a></h3>
+<pre>
+<b>Pushes the player in a direction:</b>
+
+{
+	"classname" "trigger_push"
+	"origin" "X Y Z"  // Where it is located
+    "speed" "#"       // Force of the push
+	"angle" "#"       // Direction player is pushed towards (-1=up -2=down, other=normal)
+}
+
+<b>Cameras for the intermission screen:</b>
+
+{
+    "classname" "info_intermission"
+    "origin" "X Y Z" // location of camera
+    "mangle" "X Y Z" // location the camera looks at
+    "angle" "#"      // angle of the camera
+}
+
+<b>Setting difficulty level (attaches to brush):</b>
+{
+    "classname" "trigger_setskill"
+    "message" "#"   // Skill level to change to.
+
+    {
+        &lt;INSERT BRUSH INFO HERE&gt;
+    }
+}
+
+<b>Lightning used to kill the boss of shareware.</b>  I'll figure out how to use
+it later...  I pretty much know how, I just want to test it before I
+put it here :).  From the testing I've done, the lightning produced will
+not damage a player, however.  It probably triggers a script to give the
+boss character damage.
+{
+    "classname" "event_lightning"
+    "origin" "X Y Z"  // location of lightning (origin?)
+    "targetname" "t#" // It's trigger name
+}
+</pre>
+
+<center><h2 align="CENTER"><a name="CMFMS">Section 4: Level Structures</a></h2>
+</center><h3><a name="2.4.1">2.4.1 Moving Platforms:</a></h3>
+<pre>Creating a moving platform isn't that difficult.  First, you must define the
+brush that will do the moving.  Here's an example:
+
+{
+"classname" "func_train"
+"sounds" "1"
+"speed" "128"
+"target" "t1dest1"
+"targetname" "t1"
+    {
+        ( -768 0 0 ) ( -768 1 0 ) ( -768 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+        ( -640 0 0 ) ( -640 0 1 ) ( -640 1 0 ) GROUND1_6 0 0 0 1.0 1.0
+        ( 0 -384 0 ) ( 0 -384 1 ) ( 1 -384 0 ) GROUND1_6 0 0 0 1.0 1.0
+        ( 0 -256 0 ) ( 1 -256 0 ) ( 0 -256 1 ) GROUND1_6 0 0 0 1.0 1.0
+        ( 0 0 -256 ) ( 1 0 -256 ) ( 0 1 -256 ) GROUND1_6 0 0 0 1.0 1.0
+        ( 0 0 -128 ) ( 0 1 -128 ) ( 1 0 -128 ) GROUND1_6 0 0 0 1.0 1.0
+    }
+}
+
+Now you define each of the path_corners it will travel to.  When it reaches
+a <b>path_corner</b>, it will float to the next <b>path_corner</b> defined in the <b>target</b>
+tag of the <b>path_corner</b>.  The platform will start at the <b>path_corner</b> pointed
+to by the platform's <b>target</b> tag.  It will continue the loop indefinitely
+and it will go through walls to get to its destination.  Here's its <b>path_corner</b>s
+would look like:
+
+{
+"classname" "path_corner"
+"origin" "0 0 0"
+"targetname" "t1dest1"
+"target"" "t1dest2"
+}
+
+{
+"classname" "path_corner"
+"origin" "0 128 0"
+"targetname" "t1dest2"
+"target"" "t1dest1"
+}
+</pre>
+<h3><a name="2.4.2">2.4.2 Monsters and Triggers:</a></h3>
+<pre>Have you been wondering how you can get events to trigger when a monster dies, as first
+seen in E1M2 with the demons?  Well, it's not too difficult.  When you attach a
+<b>target</b> tag to a monster, the monster's death will trigger the event.  I believe
+(not tested) that if other monsters have a <b>targetname</b> tag the same as a monster
+with the <b>target</b> tag, the <b>target</b> event will only occur when all monsters with
+a matching <b>targetname</b> tag are dead.  The monster with the <b>target</b> tag need not
+have the <b>targetname</b> tag.
+</pre>
+<h3><a name="2.4.3">2.4.3 How to use <b>trigger_count</b>:</a></h3>
+<p><font size="3">The <b>trigger_count</b> class is quite an interesting
+ trigger.  You know of the area in E1M1 where you have to hit the three 
+switches to open the door?  Well, that's done using a <b>trigger_counter</b>.  Each of the buttons you hit has its <b>target</b> property set so it points to a <b>trigger_counter</b>.  The <b>trigger_counter</b> has its <b>count</b> tag set to three.  Each time a switch is hit, the <b>trigger_counter</b>'s <b>count</b>
+ property will decrement by one.  When it reaches zero, it will open the
+ door.  Each button can only be triggered once as it has a <b>wait</b> of -1.  Here's an example given to me by Remco Stoffer:</font></p>
+<pre>{
+ "classname"	"func_door"
+ "targetname"    "door2"
+ "target"        "light1"
+ "angle"	"-1"
+ "wait" "-1"
+ "sounds" "4"
+ "message"   "press all buttons"
+ {
+  ( -10  120    0 ) ( -10   80    0 ) (  10  120    0 ) *slime0 2 0 0 1.000000 1.000000
+  (  10   80    0 ) (   0   80  100 ) ( -10  120    0 ) *slime0 2 0 0 1.000000 1.000000
+  (   0   80  100 ) ( -10   80    0 ) (   0  120  100 ) *slime0 2 0 0 1.000000 1.000000
+  ( -10   80    0 ) (  10   80  100 ) (  10   80    0 ) *slime0 2 0 0 1.000000 1.000000
+ }
+}
+{
+ "classname"      "trigger_counter"
+ "count"          "3"
+ "targetname"     "door1"
+ "target"         "door2"
+ "wait"           "-1"
+}
+{
+ "classname"      "func_button"
+ "angle"          "0"
+ "wait"           "-1"
+ "target"         "door1"
+ {
+  (  180 -200   50 ) (  180 -180   50 ) (  200 -180   50 ) tlight11 16 0 0 1.000000 1.000000
+  (  180 -200   30 ) (  200 -200   30 ) (  200 -180   30 ) tlight11 16 0 0 1.000000 1.000000
+  (  200 -180   50 ) (  180 -180   50 ) (  200 -180   30 ) tlight11 16 0 0 1.000000 1.000000
+  (  180 -180   50 ) (  180 -200   50 ) (  180 -180   30 ) tlight11 16 0 0 1.000000 1.000000
+  (  180 -200   50 ) (  200 -200   50 ) (  180 -200   30 ) tlight11 16 0 0 1.000000 1.000000
+  (  200 -200   50 ) (  200 -180   50 ) (  200 -200   30 ) tlight11 16 0 0 1.000000 1.000000
+ }
+}
+{
+ "classname"      "func_button"
+ "angle"          "0"
+ "wait"           "-1"
+ "target"         "door1"
+ {
+  (  180 -10    50 ) (  180  10    50 ) (  200  10    50 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180 -10    30 ) (  200 -10    30 ) (  200  10    30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  200  10    50 ) (  180  10    50 ) (  200  10    30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180  10    50 ) (  180 -10    50 ) (  180  10    30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180 -10    50 ) (  200 -10    50 ) (  180 -10    30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  200 -10    50 ) (  200  10    50 ) (  200 -10    30 ) +0basebtn 0 0 0 1.000000 1.000000
+ }
+}
+{
+ "classname"      "func_button"
+ "angle"          "0"
+ "wait"           "-1"
+ "target"         "door1"
+ {
+  (  180  180   50 ) (  180  200   50 ) (  200  200   50 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180  180   30 ) (  200  180   30 ) (  200  200   30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  200  200   50 ) (  180  200   50 ) (  200  200   30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180  200   50 ) (  180  180   50 ) (  180  200   30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  180  180   50 ) (  200  180   50 ) (  180  180   30 ) +0basebtn 0 0 0 1.000000 1.000000
+  (  200  180   50 ) (  200  200   50 ) (  200  180   30 ) +0basebtn 0 0 0 1.000000 1.000000
+ }
+}
+</pre>
+<h3><a name="2.4.4">2.4.4 Teleporting Monsters:</a></h3>
+<p><font size="3">Unlike in Doom-Engine games, you can precisely 
+teleport monsters into new locations in Quake.  To do so, you must first
+ create a out of reach area for the monsters to reside in.  Give this 
+area a <b>trigger_teleport</b> tag and assign a <b>targetname</b> tag to it.  Create a <b>teleport_destination</b> where you want the monster to appear.  Now, you must create a trigger whose <b>target</b> property points to the <b>trigger_teleport</b>'s targetname.  When this trigger is activated, the monster in the room will teleport to the <b>teleport_destination</b>.  Make sure that there is only one monster per room and one room per <b>teleport_destination</b>.
+  Otherwise, when the teleport is triggered, all the monsters will 
+telefrag each other (like what happens in E1M7 when you win).</font></p>
+
+<h3><a name="2.4.5">2.4.5 Properties of Buttons:</a></h3>
+<p><font size="3">The behavior of buttons can be altered in many ways.  
+By default, buttons are activated by pressing them (moving near them).  
+Buttons can be made shootable by giving them a <b>health</b> tag.  Unless you want to have to shoot the button tons of times, set the <b>health</b>
+ tag to "1".  If you want to have the button flash when you shoot it, 
+you must include all of the button animation textures in the level.  You
+ can just put them on brushes outside the level.  </font></p>
+
+<hr size="5" noshade="noshade">
+<p>Quake is ©1996 <b><a href="http://www.idsoftware.com/">id Software</a></b>. Some information about entities was obtained from the <b><a href="http://www.gamers.org/dEngine/quake/spec/qspec-current.html">Unofficial Quake Specs</a></b>, a truly awesome reference guide to Quake editing.</p>
+<p><b>Disclaimer:</b> This document is provided as is and may not be 
+perfect.  I do not guarentee the validity of any of the information in 
+it.  I will not be held liable or responsible for any damages caused 
+from use or misuse of the information contained within this document.</p>
+
+
+</font></body></html>
