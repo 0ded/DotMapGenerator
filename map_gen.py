@@ -1,5 +1,7 @@
 __author__ = 'user'
 
+#A simple test
+
 import dotmap_types
 from dotmap_types import Vec3
 from dotmap_types import Brush

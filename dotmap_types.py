@@ -28,7 +28,7 @@ class Brush:
 
     def __init__(self, p1, p2, p3, p4, p5,  p6, p7, p8):
         #init a new box brush
-        #gets the 9 points of the box
+        #gets the 8 points of the box
         #than sort which points belong to each plane
         #up, dwn, lft, rit, fwd, bwd are planes
 
