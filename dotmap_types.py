@@ -1,7 +1,23 @@
 # -*- coding: utf-8 -*-
-import heapq
+#import heapq
 
 #NOTE: Only works with 6 planes brushes
+
+
+class Header:
+    #headers, should be changed based on the game
+
+    def __init__(self):
+        self.entity = "// entity 0\r\n"
+        self.open = "{\r\n"
+        self.close = "}\r\n"
+        self.classname = "\"classname\" \"worldspawn\"\r\n"
+
+        pass
+
+    pass
+
+header = Header()
 
 class Vec3:
     #class for 3d points
@@ -20,7 +36,24 @@ class Vec3:
 
         pass
 
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        z = self.z + other.z
+
+        return Vec3(x, y, z)
+
     pass
+
+    def __sub__(self, other):
+        x = self.x - other.x
+        y = self.y - other.y
+        z = self.z - other.z
+
+        return Vec3(x, y, z)
+
+    def __str__(self):
+        return self.str
 
 
 class Brush:
@@ -37,12 +70,12 @@ class Brush:
 
         order = Points_Order(points)
 
-        self.up = next(order) #up = max z axis
-        self.dwn = next(order) #dwn = min z axis
-        self.lft = next(order) #lft = min x axis
-        self.rit = next(order) #rit = max x axis
-        self.fwd = next(order) #fwd = max y axis
-        self.bwd = next(order) #bwd = min y axis
+        self.up = next(order)  # up = max z axis
+        self.dwn = next(order)  # dwn = min z axis
+        self.lft = next(order)  # lft = min x axis
+        self.rit = next(order)  # rit = max x axis
+        self.fwd = next(order)  # fwd = max y axis
+        self.bwd = next(order)  # bwd = min y axis
 
         self.str = "{\r\n"
         self.str += "{} {} {} NULL 0 0 0 0.5 0.5 0 0 0\r\n".format(self.up[0].str, self.up[1].str, self.up[2].str)
@@ -54,6 +87,8 @@ class Brush:
         self.str += "}\r\n"
 
         pass
+    def __str__(self):
+        return self.str
 
     pass
 
