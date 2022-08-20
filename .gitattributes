@@ -1,0 +1,5 @@
+*.php linguist-detectable=false
+*.html linguist-detectable=false
+*.map linguist-detectable=false
+*.map.* linguist-detectable=false
+*.py linguist-detectable=true
